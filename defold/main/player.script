@@ -1,0 +1,16 @@
+-- Player controller: left/right input, clamped to screen width.
+local SPEED = 400
+function init(self)
+    msg.post(".", "acquire_input_focus")
+    self.dir = 0
+end
+function update(self, dt)
+    local p = go.get_position()
+    p.x = math.max(20, math.min(460, p.x + self.dir * SPEED * dt))
+    go.set_position(p)
+    self.dir = 0
+end
+function on_input(self, action_id, action)
+    if action_id == hash("left") then self.dir = -1
+    elseif action_id == hash("right") then self.dir = 1 end
+end

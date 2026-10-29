@@ -1,0 +1,20 @@
+-- Spawns blocks from a factory, tracks score, ends the game on collision.
+function init(self)
+    self.timer, self.score, self.alive = 0, 0, true
+end
+function update(self, dt)
+    if not self.alive then return end
+    self.score = self.score + dt
+    self.timer = self.timer - dt
+    if self.timer <= 0 then
+        factory.create("#block_factory", vmath.vector3(math.random(20, 460), 740, 0))
+        self.timer = math.max(0.25, 1.0 - self.score * 0.01)
+    end
+    label.set_text("/ui#score", "Score: " .. math.floor(self.score))
+end
+function on_message(self, message_id)
+    if message_id == hash("player_hit") then
+        self.alive = false
+        label.set_text("/ui#score", "Game over: " .. math.floor(self.score))
+    end
+end

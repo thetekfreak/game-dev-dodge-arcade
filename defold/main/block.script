@@ -1,0 +1,13 @@
+-- Falling block: moves down, reports player collision, deletes itself off-screen.
+local FALL = 250
+function update(self, dt)
+    local p = go.get_position()
+    p.y = p.y - FALL * dt
+    go.set_position(p)
+    if p.y < -40 then go.delete() end
+end
+function on_message(self, message_id, message)
+    if message_id == hash("trigger_response") and message.enter then
+        msg.post("/spawner", "player_hit")
+    end
+end

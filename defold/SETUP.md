@@ -1,0 +1,1 @@
+Create a new Defold project, copy `main/` in, then in the editor: add input bindings `left`/`right` (game.input_binding), a block game object with a trigger collision object + block.script, a factory `block_factory` on the spawner, and a `ui` object with a label `score`.
